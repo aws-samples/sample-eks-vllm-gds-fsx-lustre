@@ -69,9 +69,7 @@ parallel, and it comes to about 9.6 seconds on both FSx arms.
 The Run:ai streamer never reports its own load time, so for that arm we read the elapsed time off
 the loader's progress bar instead.
 
-Every arm drops the host page cache (`sync; echo 3 > /proc/sys/vm/drop_caches`) before loading, so
-each figure is a cold read. Without it the default loader can come in around 4x faster off a warm
-cache, which understates the speedup rather than inflating it.
+Each figure below is the mean of three runs (n=3):
 
 | source / loader | weight load | total model load | vs default |
 |---|---|---|---|
@@ -366,9 +364,6 @@ disabled; get the striping wrong and you read from one OST instead of eight.
 A bigger filesystem buys less than you would expect. On a MoE model such as DeepSeek-V4-Pro-0813,
 doubling from 8 to 16 OSTs improved weight loading by only 10%, because 40% of the weight load goes
 on per-tensor work that is not bandwidth bound.
-
-To reproduce this, follow the Deployment steps above. The traps we hit on the way are in
-[`KNOWN_ISSUES.md`](KNOWN_ISSUES.md).
 
 ## Known Issues
 
