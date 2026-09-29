@@ -1,14 +1,14 @@
 # Accelerate vLLM model loading on Amazon EKS using InstantTensor and NVIDIA GPUDirect Storage (GDS) with Amazon FSx for Lustre
 
-This repository aims to help customers running self-managed LLMs on Amazon EKS reduce vLLM
+This repository helps customers running self-managed LLMs on Amazon EKS to reduce vLLM
 cold-start model-loading time. Using the [InstantTensor](https://docs.vllm.ai/en/latest/models/extensions/instanttensor/)
-loader with NVIDIA GPUDirect Storage (GDS) on Amazon FSx for Lustre, we were able to cut the vLLM
-weight loading time from about 28 minutes to 35 seconds - a **~48x speedup** in our testing.
+loader with NVIDIA GPUDirect Storage (GDS) on Amazon FSx for Lustre, we cut the vLLM weight-loading time
+for [DeepSeek-V4-Pro-0813](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813) (892.7 GB) from
+about 28 minutes to 35 seconds - a **~48x speedup** in our testing.
 
 It contains the AWS infrastructure, EKS manifests and setup scripts to benchmark vLLM cold-start
 model-loading time on a single `p5en.48xlarge`, comparing three read paths for the 1.6-trillion
-parameter [DeepSeek-V4-Pro-0813](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813) full
-weights (892.7 GB):
+parameter DeepSeek-V4-Pro-0813 full weights:
 
 - FSx for Lustre with the default loader
 - S3 + [Run:ai Model Streamer](https://github.com/dsx-ai-factory/model-streamer)
